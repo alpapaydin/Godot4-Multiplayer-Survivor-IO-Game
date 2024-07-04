@@ -1,8 +1,8 @@
 # SurvivorIO
 
-![SurvivorIO](https://your-game-image-url.com/banner.png)
+![SurvivorIO](https://github.com/alpapaydin/Godot4-Multiplayer-Survivor-IO-Game/blob/master/preview.png?raw=true)
 
-Welcome to **SurvivorIO** – a multiplayer web game designed to demonstrate multiplayer features within the Godot 4.x. This project specifically targets implementation of an authoritative multiplayer MMO structure utilizing WebSocket to support HTML5 exports, akin to .io games commonly played in browsers. Experience a rich blend of survival, crafting, and PvP combat in a dynamic and immersive environment.
+Welcome to **SurvivorIO** – a multiplayer web game designed to demonstrate multiplayer features within the Godot 4.x. This project specifically targets implementation of an authoritative multiplayer MMO structure utilizing WebSocket with SSL to support HTML5 exports, similar to .io games commonly played in browsers. Experience a rich blend of survival, crafting, and PvP combat in a dynamic and immersive environment.
 
 ## Features
 
@@ -46,17 +46,18 @@ Welcome to **SurvivorIO** – a multiplayer web game designed to demonstrate mul
 	```gdscript
 	var DEFAULT_SERVER_IP = "localhost"
 	```
-2. Start the server from the Godot editor.
-3. Launch the web client from the Godot editor.
+2. Start the server from the Godot editor. Server is designed to be a headless instance so it is not playable.
+3. Launch the web client or another instance from the Godot editor to automatically connect to server.
 
 ### Deployment
 
 1. If you want to upload to your server or itch.io, you need to use `wss`:
 	- Generate Let's Encrypt certificates.
 	- Place them in the `assets/certs` folder.
+	- Set host info and cert paths in `Constants.gd`, and `USE_SSL` to `true`.
 	- The clients will automatically connect to the server using these certificates.
 
-2. If you use localhost just run the game and click debug host button. Then launch another instance, it will automatically connect.
+2. You can use predefined export templates for linux server and web client.
 
 ## Development Status
 
@@ -95,6 +96,6 @@ Welcome to **SurvivorIO** – a multiplayer web game designed to demonstrate mul
 
 ### To Do
 
-- Fix small bug with player despawn:
+- Fix small error with player despawn:
   ```sh
-  get_node: Node not found: "/root/Game/Level/Main/Players/(pId)" (absolute path attempted from "/root")
+  get_node: Node not found: "/root/Game/Level/Main/Players/(playerId)" (absolute path attempted from "/root")
