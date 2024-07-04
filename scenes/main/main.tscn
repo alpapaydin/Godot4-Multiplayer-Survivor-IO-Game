@@ -1,0 +1,87 @@
+[gd_scene load_steps=11 format=3 uid="uid://c3rwa8o141mf4"]
+
+[ext_resource type="Script" path="res://scenes/main/main.gd" id="1_5kenc"]
+[ext_resource type="PackedScene" uid="uid://bf074ibcy5o0" path="res://scenes/mapGen/map.tscn" id="1_vj1jr"]
+[ext_resource type="PackedScene" uid="uid://do5frseoo8sxj" path="res://scenes/ui/spawn/spawnPlayer.tscn" id="2_ajc02"]
+[ext_resource type="PackedScene" uid="uid://bmv1uy5a1k05u" path="res://scenes/ui/inventory/inventory.tscn" id="6_tq15c"]
+[ext_resource type="PackedScene" uid="uid://cogav6f5iu6qb" path="res://scenes/ui/minimap/minimap.tscn" id="6_xel07"]
+[ext_resource type="Script" path="res://scenes/main/dayNightCycle.gd" id="7_4y3sb"]
+[ext_resource type="PackedScene" uid="uid://ceolcwatpaicu" path="res://scenes/ui/daynight/daynightcycle_ui.tscn" id="7_c4hjm"]
+[ext_resource type="Texture2D" uid="uid://d4iknbe05uwaj" path="res://scenes/main/daynightcycle-gradient-texture.tres" id="8_le63a"]
+[ext_resource type="Script" path="res://scenes/main/NavHelper.gd" id="10_40gnc"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dr53p"]
+properties/0/path = NodePath("dayNight:time")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_5kenc")
+
+[node name="Map" parent="." instance=ExtResource("1_vj1jr")]
+
+[node name="Pickups" type="Node2D" parent="."]
+
+[node name="Players" type="Node2D" parent="."]
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Projectiles" type="Node2D" parent="."]
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="SpawnPlayer" parent="HUD" instance=ExtResource("2_ajc02")]
+
+[node name="Inventory" parent="HUD" instance=ExtResource("6_tq15c")]
+
+[node name="DayNightCycleUI" parent="HUD" instance=ExtResource("7_c4hjm")]
+unique_name_in_owner = true
+mouse_filter = 2
+
+[node name="Minimap" parent="HUD" instance=ExtResource("6_xel07")]
+offset_top = -230.0
+offset_right = 200.0
+offset_bottom = -30.0
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/character/player.tscn")
+spawn_path = NodePath("../Players")
+
+[node name="EnemySpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/enemy/enemy.tscn")
+spawn_path = NodePath("../Enemies")
+
+[node name="ProjectileSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/attacks/slash_attack.tscn", "res://scenes/attacks/projectile_attack.tscn")
+spawn_path = NodePath("../Projectiles")
+
+[node name="ObjectSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/object/breakable.tscn")
+spawn_path = NodePath("../Objects")
+
+[node name="PickupSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/item/pickup.tscn")
+spawn_path = NodePath("../Pickups")
+
+[node name="ObjectSpawnTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[node name="EnemySpawnTimer" type="Timer" parent="."]
+wait_time = 15.0
+autostart = true
+
+[node name="dayNight" type="CanvasModulate" parent="."]
+script = ExtResource("7_4y3sb")
+gradient_texture = ExtResource("8_le63a")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_dr53p")
+
+[node name="NavHelper" type="Node2D" parent="."]
+script = ExtResource("10_40gnc")
+
+[connection signal="timeout" from="ObjectSpawnTimer" to="." method="_on_object_spawn_timer_timeout"]
+[connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]

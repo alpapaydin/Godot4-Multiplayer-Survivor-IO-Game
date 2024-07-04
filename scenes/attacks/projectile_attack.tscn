@@ -1,0 +1,70 @@
+[gd_scene load_steps=7 format=3 uid="uid://c574wa7os4la4"]
+
+[ext_resource type="Script" path="res://scenes/attacks/projectile_attack.gd" id="1_hm7c1"]
+[ext_resource type="Texture2D" uid="uid://nxh83m8hxwdm" path="res://assets/characters/attacks/fireshuriken.png" id="2_xfsfk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5p05c"]
+radius = 8.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_pit57"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath("MovingParts:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+
+[sub_resource type="Animation" id="Animation_wwdky"]
+resource_name = "loop"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MovingParts/Adjust/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y8a8n"]
+_data = {
+"loop": SubResource("Animation_wwdky")
+}
+
+[node name="Projectile" type="Node2D"]
+script = ExtResource("1_hm7c1")
+
+[node name="MovingParts" type="Node2D" parent="."]
+
+[node name="Adjust" type="Node2D" parent="MovingParts"]
+position = Vector2(22, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="MovingParts/Adjust"]
+unique_name_in_owner = true
+texture_filter = 1
+texture = ExtResource("2_xfsfk")
+hframes = 4
+
+[node name="AttackArea" type="Area2D" parent="MovingParts/Adjust"]
+unique_name_in_owner = true
+position = Vector2(6, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MovingParts/Adjust/AttackArea"]
+position = Vector2(-7, 0)
+shape = SubResource("CircleShape2D_5p05c")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_pit57")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_y8a8n")
+}
+autoplay = "loop"
+
+[connection signal="body_entered" from="MovingParts/Adjust/AttackArea" to="." method="_on_attack_area_body_entered"]

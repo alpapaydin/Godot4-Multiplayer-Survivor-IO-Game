@@ -1,0 +1,185 @@
+[gd_scene load_steps=6 format=3 uid="uid://bmv1uy5a1k05u"]
+
+[ext_resource type="Script" path="res://scenes/ui/inventory/inventory.gd" id="1_d5dig"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v03e5"]
+
+[sub_resource type="Animation" id="Animation_6ibei"]
+resource_name = "craftAppear"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BottomBar/VBoxContainer/PanelContainer/craftCont:custom_minimum_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(250, 200)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BottomBar/VBoxContainer/PanelContainer/craftCont:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_pxbfh"]
+resource_name = "craftDisappear"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BottomBar/VBoxContainer/PanelContainer/craftCont:custom_minimum_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(250, 200), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BottomBar/VBoxContainer/PanelContainer/craftCont:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"closeRecipe"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vpn1w"]
+_data = {
+"craftAppear": SubResource("Animation_6ibei"),
+"craftDisappear": SubResource("Animation_pxbfh")
+}
+
+[node name="Inventory" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_d5dig")
+
+[node name="BottomBar" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_v03e5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BottomBar"]
+layout_mode = 2
+
+[node name="ChatInputLocation" type="HBoxContainer" parent="BottomBar/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PanelContainer" type="VBoxContainer" parent="BottomBar/VBoxContainer"]
+layout_mode = 2
+
+[node name="craftButton" type="Button" parent="BottomBar/VBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Craft"
+
+[node name="craftCont" type="PanelContainer" parent="BottomBar/VBoxContainer/PanelContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BottomBar/VBoxContainer/PanelContainer/craftCont"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="BottomBar/VBoxContainer/PanelContainer/craftCont/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Recipes" type="GridContainer" parent="BottomBar/VBoxContainer/PanelContainer/craftCont/VBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+columns = 4
+
+[node name="RecipeBox" type="PanelContainer" parent="BottomBar/VBoxContainer/PanelContainer/craftCont/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BottomBar/VBoxContainer/PanelContainer/craftCont/VBoxContainer/RecipeBox"]
+layout_mode = 2
+
+[node name="recipeName" type="Label" parent="BottomBar/VBoxContainer/PanelContainer/craftCont/VBoxContainer/RecipeBox/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Recipe"
+horizontal_alignment = 1
+
+[node name="ingList" type="HBoxContainer" parent="BottomBar/VBoxContainer/PanelContainer/craftCont/VBoxContainer/RecipeBox/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="BottomBar/VBoxContainer/PanelContainer/craftCont/VBoxContainer/RecipeBox/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="craftButton" type="Button" parent="BottomBar/VBoxContainer/PanelContainer/craftCont/VBoxContainer/RecipeBox/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Craft"
+
+[node name="closeRecipeBox" type="Button" parent="BottomBar/VBoxContainer/PanelContainer/craftCont/VBoxContainer/RecipeBox/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Close"
+
+[node name="Slots" type="HBoxContainer" parent="BottomBar/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vpn1w")
+}
+
+[connection signal="pressed" from="BottomBar/VBoxContainer/PanelContainer/craftButton" to="." method="_on_craft_button_pressed"]
+[connection signal="pressed" from="BottomBar/VBoxContainer/PanelContainer/craftCont/VBoxContainer/RecipeBox/VBoxContainer/HBoxContainer2/craftButton" to="." method="_on_startcraft_button_pressed"]
+[connection signal="pressed" from="BottomBar/VBoxContainer/PanelContainer/craftCont/VBoxContainer/RecipeBox/VBoxContainer/HBoxContainer2/closeRecipeBox" to="." method="closeRecipe"]

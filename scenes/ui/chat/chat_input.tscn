@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://bxua0uxlmm31g"]
+
+[node name="ChatInput" type="LineEdit"]
+size_flags_horizontal = 3

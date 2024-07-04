@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://b0bpnejbj6sbw"]
+
+[ext_resource type="Script" path="res://scenes/ui/playersList/player_slot.gd" id="1_nvol7"]
+
+[node name="PlayerSlot" type="HBoxContainer"]
+script = ExtResource("1_nvol7")
+
+[node name="PlayerNameLabel" type="Label" parent="."]
+custom_minimum_size = Vector2(150, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+text = "PlayerName"
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="PlayerScoreLabel" type="Label" parent="."]
+custom_minimum_size = Vector2(45, 25)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 16
+text = "PlayerScore"
+horizontal_alignment = 1

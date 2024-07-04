@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=3 uid="uid://bfq4kkw8jhqay"]
+
+[ext_resource type="Script" path="res://scenes/item/pickup.gd" id="1_4sb31"]
+[ext_resource type="Texture2D" uid="uid://qtgqprk3l84c" path="res://assets/items/wood.png" id="1_d0dnh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xjrky"]
+radius = 17.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ladu8"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath(".:itemId")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath(".:stackCount")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+
+[sub_resource type="Animation" id="Animation_n3n0q"]
+resource_name = "appear"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1.2, 1.2), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7rbi3"]
+_data = {
+"appear": SubResource("Animation_n3n0q")
+}
+
+[node name="Pickup" type="Area2D"]
+collision_layer = 0
+script = ExtResource("1_4sb31")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_d0dnh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xjrky")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_ladu8")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7rbi3")
+}
+autoplay = "appear"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

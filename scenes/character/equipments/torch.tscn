@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://cv01pg7l0b1q8"]
+
+[ext_resource type="Script" path="res://scenes/character/equipments/torch.gd" id="1_6vgs8"]
+[ext_resource type="Texture2D" uid="uid://fkefgfbw1bry" path="res://assets/daynight/light.webp" id="1_iqrwj"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qamgp"]
+properties/0/path = NodePath(".:data")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
+[node name="Torch" type="Node2D"]
+script = ExtResource("1_6vgs8")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+scale = Vector2(2, 2)
+energy = 1.31
+texture = ExtResource("1_iqrwj")
+height = 5.0
+
+[node name="DurabilityTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_qamgp")
+
+[connection signal="timeout" from="DurabilityTimer" to="." method="_on_durability_timer_timeout"]

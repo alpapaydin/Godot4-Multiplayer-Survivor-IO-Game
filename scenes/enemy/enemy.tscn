@@ -1,0 +1,97 @@
+[gd_scene load_steps=8 format=3 uid="uid://d3bgdspo4bhr4"]
+
+[ext_resource type="Script" path="res://scenes/enemy/enemy.gd" id="1_afvkb"]
+[ext_resource type="Texture2D" uid="uid://ceue4vmbas2ws" path="res://assets/characters/enemy/zombie.png" id="2_dxtpn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m76gk"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_tx4kn"]
+properties/0/path = NodePath("..:position")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath("..:targetPlayer")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath("..:hp")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+properties/3/path = NodePath("../MovingParts:rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 2
+properties/4/path = NodePath("..:enemyId")
+properties/4/spawn = true
+properties/4/replication_mode = 2
+
+[sub_resource type="Curve" id="Curve_popii"]
+_data = [Vector2(0.00279329, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4kkf6"]
+bg_color = Color(0.701961, 0.239216, 0.239216, 0.462745)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4vv1o"]
+bg_color = Color(0.239216, 1, 0.239216, 0.482353)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="Enemy" type="CharacterBody2D" groups=["damageable"]]
+script = ExtResource("1_afvkb")
+
+[node name="MovingParts" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="MovingParts"]
+unique_name_in_owner = true
+texture = ExtResource("2_dxtpn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_m76gk")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath("../NavigationAgent2D")
+replication_config = SubResource("SceneReplicationConfig_tx4kn")
+
+[node name="AttackCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="bloodParticles" type="CPUParticles2D" parent="."]
+emitting = false
+lifetime = 0.25
+one_shot = true
+speed_scale = 0.9
+explosiveness = 1.0
+randomness = 0.46
+gravity = Vector2(0, 450)
+initial_velocity_min = 25.25
+initial_velocity_max = 267.67
+angular_velocity_min = -225.45
+angular_velocity_max = 370.91
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_popii")
+color = Color(0.215686, 0.658824, 0, 1)
+
+[node name="EnemyUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HPBar" type="ProgressBar" parent="EnemyUI"]
+custom_minimum_size = Vector2(60, 10)
+layout_mode = 0
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -30.0
+theme_override_styles/background = SubResource("StyleBoxFlat_4kkf6")
+theme_override_styles/fill = SubResource("StyleBoxFlat_4vv1o")
+max_value = 1.0
+value = 0.5
+show_percentage = false

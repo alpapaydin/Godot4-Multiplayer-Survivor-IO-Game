@@ -1,0 +1,68 @@
+[gd_scene load_steps=5 format=3 uid="uid://fgbg7uc3rey6"]
+
+[ext_resource type="Script" path="res://scenes/ui/playerUI/playerUI.gd" id="1_dc8hm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mxcik"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u6y7q"]
+bg_color = Color(0.807843, 0.294118, 0.235294, 0.556863)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.52549, 0.52549, 0.52549, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oukh8"]
+bg_color = Color(0, 0.529412, 0.113725, 1)
+border_color = Color(0.701961, 0.701961, 0.701961, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[node name="PlayerUi" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dc8hm")
+
+[node name="NameTag" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 20.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_mxcik")
+
+[node name="hpBar" type="ProgressBar" parent="NameTag"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_u6y7q")
+theme_override_styles/fill = SubResource("StyleBoxFlat_oukh8")
+max_value = 1.0
+value = 1.0
+show_percentage = false
+
+[node name="nameLabel" type="Label" parent="NameTag"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 10)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "playerName"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1

@@ -1,0 +1,72 @@
+[gd_scene load_steps=9 format=3 uid="uid://ckcl60ixuavyq"]
+
+[ext_resource type="Texture2D" uid="uid://bwgam7jisxhlo" path="res://assets/characters/attacks/slash/NPT100.png" id="1_btrb2"]
+[ext_resource type="Script" path="res://scenes/attacks/slash_attack.gd" id="1_olb8v"]
+[ext_resource type="Texture2D" uid="uid://cvi0nf7ojg7t" path="res://assets/characters/attacks/slash/NPT101.png" id="2_ooaa3"]
+[ext_resource type="Texture2D" uid="uid://cdreicodqqmh4" path="res://assets/characters/attacks/slash/NPT102.png" id="3_v0icu"]
+[ext_resource type="Texture2D" uid="uid://b2s7l3weui1aq" path="res://assets/characters/attacks/slash/NPT103.png" id="4_stcj2"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_pit57"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath("MovingParts:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7lv5j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_btrb2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ooaa3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_v0icu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_stcj2")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 9.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rq68o"]
+radius = 14.0
+height = 45.0
+
+[node name="SlashAttack" type="Node2D"]
+script = ExtResource("1_olb8v")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_pit57")
+
+[node name="MovingParts" type="Node2D" parent="."]
+
+[node name="Adjust" type="Node2D" parent="MovingParts"]
+position = Vector2(22, 0)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="MovingParts/Adjust"]
+unique_name_in_owner = true
+rotation = -1.5708
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_7lv5j")
+autoplay = "default"
+frame = 4
+frame_progress = 1.0
+
+[node name="AttackArea" type="Area2D" parent="MovingParts/Adjust"]
+unique_name_in_owner = true
+position = Vector2(6, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MovingParts/Adjust/AttackArea"]
+shape = SubResource("CapsuleShape2D_rq68o")
+
+[connection signal="animation_finished" from="MovingParts/Adjust/Sprite" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="frame_changed" from="MovingParts/Adjust/Sprite" to="." method="_on_animated_sprite_2d_frame_changed"]

@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://cv8fbx1drgjch"]
+
+[ext_resource type="Script" path="res://scenes/ui/chat/message_box.gd" id="1_opmt7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1a64p"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.627451, 0.627451, 0.627451, 0.360784)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="Animation" id="Animation_amjp2"]
+resource_name = "appear"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t7rxf"]
+_data = {
+"appear": SubResource("Animation_amjp2")
+}
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_iao52"]
+properties/0/path = NodePath(".:text")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
+[node name="MessageBox" type="PanelContainer"]
+offset_right = 150.0
+offset_bottom = 60.0
+pivot_offset = Vector2(75, 30)
+theme_override_styles/panel = SubResource("StyleBoxFlat_1a64p")
+script = ExtResource("1_opmt7")
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(140, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_t7rxf")
+}
+autoplay = "appear"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_iao52")

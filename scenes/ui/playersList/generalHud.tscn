@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0gaxwlt4ajax"]
+
+[ext_resource type="Script" path="res://scenes/ui/playersList/generalHud.gd" id="1_230cr"]
+[ext_resource type="PackedScene" uid="uid://b0bpnejbj6sbw" path="res://scenes/ui/playersList/player_slot.tscn" id="2_wx4wx"]
+
+[node name="GeneralHud" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_230cr")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Players"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="playerList" type="VBoxContainer" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PlayerSlot" parent="PanelContainer/VBoxContainer/playerList" instance=ExtResource("2_wx4wx")]
+layout_mode = 2

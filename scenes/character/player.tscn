@@ -1,0 +1,372 @@
+[gd_scene load_steps=16 format=3 uid="uid://bmhxilkffhqa5"]
+
+[ext_resource type="Script" path="res://scenes/character/player.gd" id="1_7xvi4"]
+[ext_resource type="Texture2D" uid="uid://cim7wbmptu8yv" path="res://assets/characters/bodies/4.png" id="2_s20bt"]
+[ext_resource type="PackedScene" uid="uid://fgbg7uc3rey6" path="res://scenes/ui/playerUI/playerUI.tscn" id="3_brb0h"]
+[ext_resource type="AudioStream" uid="uid://bettvca8oc6y3" path="res://assets/sfx/step.ogg" id="4_bflkw"]
+[ext_resource type="Texture2D" uid="uid://b1truway4n8dj" path="res://assets/characters/hands/hands-sheet.png" id="4_yjkcj"]
+[ext_resource type="AudioStream" uid="uid://cfwvqbq1e4itl" path="res://assets/sfx/swing.ogg" id="5_xs70q"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_khhcq"]
+height = 20.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cdkds"]
+radius = 16.0
+
+[sub_resource type="Animation" id="Animation_l6e13"]
+resource_name = "punching"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MovingParts/Hands:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7, 8, 9, 10, 11]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("5_xs70q")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("5_xs70q")
+}],
+"times": PackedFloat32Array(0.2, 0.5)
+}
+tracks/1/use_blend = true
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"punchCheckCollision"
+}, {
+"args": [],
+"method": &"punchCheckCollision"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_oaeq3"]
+resource_name = "stab"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MovingParts/HeldItem:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.785398, 0.785398, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MovingParts/HeldItem:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(19, 10), Vector2(10, 15), Vector2(25, -25), Vector2(19, 10)]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer2D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("5_xs70q")
+}],
+"times": PackedFloat32Array(0.3)
+}
+tracks/2/use_blend = true
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"punchCheckCollision"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_ed68f"]
+resource_name = "swing"
+length = 0.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MovingParts/HeldItem:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -1.0472, 0.523599, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MovingParts/HeldItem:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(19, 10), Vector2(5, 10), Vector2(25, 2), Vector2(19, 10)]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer2D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("5_xs70q")
+}],
+"times": PackedFloat32Array(0.5)
+}
+tracks/2/use_blend = true
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"punchCheckCollision"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_1ejc1"]
+resource_name = "walking"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MovingParts/Hands:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("4_bflkw")
+}],
+"times": PackedFloat32Array(0.2)
+}
+tracks/1/use_blend = true
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MovingParts/HeldItem:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(16, 7), Vector2(23, 2), Vector2(19, 10), Vector2(16, 7)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MovingParts/HeldItem:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.20944, -0.0698132, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4vloy"]
+_data = {
+"punching": SubResource("Animation_l6e13"),
+"stab": SubResource("Animation_oaeq3"),
+"swing": SubResource("Animation_ed68f"),
+"walking": SubResource("Animation_1ejc1")
+}
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1pknd"]
+properties/0/path = NodePath("AnimationPlayer:current_animation")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath("MovingParts:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath(".:hp")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+properties/3/path = NodePath(".:playerName")
+properties/3/spawn = true
+properties/3/replication_mode = 2
+properties/4/path = NodePath(".:characterFile")
+properties/4/spawn = true
+properties/4/replication_mode = 2
+properties/5/path = NodePath(".:speed")
+properties/5/spawn = true
+properties/5/replication_mode = 2
+properties/6/path = NodePath(".:maxHP")
+properties/6/spawn = true
+properties/6/replication_mode = 2
+properties/7/path = NodePath(".:attackDamage")
+properties/7/spawn = true
+properties/7/replication_mode = 2
+
+[sub_resource type="Curve" id="Curve_s5j1r"]
+_data = [Vector2(0.00279329, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Player" type="CharacterBody2D" groups=["damageable", "player"]]
+script = ExtResource("1_7xvi4")
+
+[node name="MovingParts" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="MovingParts"]
+texture = ExtResource("2_s20bt")
+
+[node name="Hands" type="Sprite2D" parent="MovingParts"]
+unique_name_in_owner = true
+texture = ExtResource("4_yjkcj")
+offset = Vector2(6, 0)
+hframes = 12
+frame = 4
+
+[node name="HeldItem" type="Sprite2D" parent="MovingParts"]
+unique_name_in_owner = true
+texture_filter = 1
+rotation = 0.785398
+offset = Vector2(25, -25)
+
+[node name="HitArea" type="Area2D" parent="MovingParts"]
+unique_name_in_owner = true
+
+[node name="HitCollision" type="CollisionShape2D" parent="MovingParts/HitArea"]
+unique_name_in_owner = true
+position = Vector2(27, 0)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_khhcq")
+
+[node name="Equipment" type="Node2D" parent="MovingParts"]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_cdkds")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = false
+
+[node name="PlayerUi" parent="." instance=ExtResource("3_brb0h")]
+offset_left = -50.0
+offset_top = -50.0
+offset_right = -50.0
+offset_bottom = -50.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4vloy")
+}
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_1pknd")
+visibility_update_mode = 2
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
+[node name="bloodParticles" type="CPUParticles2D" parent="."]
+emitting = false
+lifetime = 0.25
+one_shot = true
+speed_scale = 0.9
+explosiveness = 1.0
+randomness = 0.46
+gravity = Vector2(0, 450)
+initial_velocity_min = 25.25
+initial_velocity_max = 267.67
+angular_velocity_min = -225.45
+angular_velocity_max = 370.91
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_s5j1r")
+color = Color(1, 0.172549, 0.113725, 1)
+
+[node name="EquipmentSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/character/equipments/torch.tscn")
+spawn_path = NodePath("../MovingParts/Equipment")
+
+[node name="MessageSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/ui/chat/message_box.tscn")
+spawn_path = NodePath("../PlayerMessages")
+
+[node name="PlayerMessages" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 50)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -70.0
+offset_top = -100.0
+offset_right = 70.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 0
