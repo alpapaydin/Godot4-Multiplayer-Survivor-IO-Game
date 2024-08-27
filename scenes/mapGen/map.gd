@@ -27,8 +27,8 @@ func generate_terrain():
 			var tile_coord = Vector2i()
 			if noise_value > 0.03:
 				tile_coord = grassAtlasCoords.pick_random()
-				tile_map.set_cell(0, Vector2i(x, y), tileset_source, tile_coord, 0)
+				tile_map.set_cell(Vector2i(x, y), tileset_source, tile_coord, 0)
 				walkable_tiles.append(Vector2i(x,y))
 			else:
 				tile_coord = waterCoors.pick_random()
-				tile_map.set_cell(0, Vector2i(x, y), tileset_source, tile_coord, 0)
+				tile_map.set_cell(Vector2i(x, y), tileset_source, tile_coord, 0)

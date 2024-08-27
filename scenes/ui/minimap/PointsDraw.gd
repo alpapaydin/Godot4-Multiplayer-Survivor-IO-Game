@@ -2,7 +2,7 @@ extends Control
 
 const PLAYER_COLOR := Color(1.0, 0.0, 0.0)   # Red color for player
 @export var tile_size: Vector2 = Vector2(3, 3)
-@export var tilemap: TileMap
+@export var tilemap: TileMapLayer
 @export var player: Node2D
 
 @onready var coordsLabel := $"../../CoordsLabel"
