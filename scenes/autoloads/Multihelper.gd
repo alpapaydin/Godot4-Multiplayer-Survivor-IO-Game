@@ -12,6 +12,7 @@ signal server_disconnected
 signal player_spawned(peer_id, player_info)
 signal player_despawned
 signal player_registered
+@warning_ignore("unused_signal")
 signal player_score_updated
 signal data_loaded
 

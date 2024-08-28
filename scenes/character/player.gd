@@ -23,8 +23,8 @@ var equippedItem : String:
 			var itemData = Items.equips[value]
 			if "projectile" in itemData:
 				spawnsProjectile = itemData["projectile"]
-			else:
-				spawnsProjectile = ""
+		else:
+			spawnsProjectile = ""
 
 #stats
 @export var maxHP := 250.0
