@@ -25,7 +25,7 @@ var equips := {
 	"sword1": {"attack": "swing", "damage": 30, "damageType": "normal", "durability": 5.0},
 	"axe1": {"attack": "swing", "damage": 30, "damageType": "axe", "durability": 20.0},
 	"pickaxe1": {"attack": "swing", "damage": 30, "damageType": "pickaxe", "durability": 20.0},
-	"spear1": {"attack": "stab", "damage": 20, "damageType": "normal", "projectile": "fireshuriken"},
+	"spear1": {"attack": "stab", "damage": 20, "damageType": "normal", "durability": 20.0, "projectile": "fireshuriken"},
 	"dagger1": {"attack": "stab", "damage": 15, "damageType": "normal", "durability": 10.0},
 	"axe2": {"attack": "swing", "damage": 40, "damageType": "axe", "durability": 30.0},
 	"pickaxe2": {"attack": "swing", "damage": 40, "damageType": "pickaxe", "durability": 30.0},
